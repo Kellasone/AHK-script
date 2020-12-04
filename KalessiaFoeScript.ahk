@@ -45,3 +45,13 @@ Archer1Y=609
 Archer2X=946
 Archer2Y=621
 
+
+test(){
+	InputBox, troopNumber
+	InputBox, parameter 
+	MsgBox, You entered troop number %troopNumber% with parameter %parameter%.
+}
+
+^~:: test()
+
+
