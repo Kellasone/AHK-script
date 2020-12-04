@@ -5,19 +5,8 @@
 !Escape:: ExitApp
 ^p:: Pause
 
-;current loaded army position
-Deselect1X = 638 
-Deselect1Y = 440
-Deselect2X = 686
-Deselect2Y = 493
 
-GetTroopParameter(Troop, Parameter){
-	;troop to load position
-	Troop1X = 782
-	Troop2X = 829
-	Troop1Y = 720
-	Troop2Y = 772
-
+SelectTroopTab(Troop){
 	;fast units tab position
 	Fast1X:=753
 	Fast1Y:=607
@@ -25,14 +14,14 @@ GetTroopParameter(Troop, Parameter){
 	Fast2Y:=622
 
 	;tanks units tab position 
-	Tank1X = 792
+	Tank1X = 795
 	Tank2X = 820
-	Tank1Y = 604
+	Tank1Y = 608
 	Tank2Y = 625
 
 	;light units tab position
-	Light1X=842
-	Light1Y=609
+	Light1X=845
+	Light1Y=612
 	Light2X=860
 	Light2Y=621
 
@@ -48,60 +37,84 @@ GetTroopParameter(Troop, Parameter){
 	Archer2X=946
 	Archer2Y=621
 	if(Troop = 1){
-		if(Parameter = "X"){
-			Random, rand, Fast1X, Fast2X	
-			return rand
-		} else {
-			Random, rand, Fast1Y, Fast2Y
-			return rand
-			}
+		Random, randX, Fast1X, Fast2X	
+		Random, randY, Fast1Y, Fast2Y
+		Click %randX% %randY%	
 	}
 	if(Troop = 2){
-		if(Parameter = "X"){
-			Random, rand, Tank1X, Tank2X
-			return rand
-		} else {
-			Random, rand, Tank1Y, Tank2Y
-			return rand
-		}
+		Random, randX, Tank1X, Tank2X
+		Random, randY, Tank1Y, Tank2Y
+		Click %randX% %randY%	
 	}
 	if(Troop = 3){
-		if(Parameter = "X"){
-			Random, rand, Light1X, Light2X
-			return rand
-		} else {
-			Random, rand, Light1Y, Light2Y
-			return rand
-		}
+		Random, randX, Light1X, Light2X
+		Random, randY, Light1Y, Light2Y
+		Click %randX% %randY%	
 	}
 	if(Troop = 4){
-		if(Parameter = "X"){
-			Random, rand, Artilery1X, Artilery2X
-			return rand
-		} else {
-			Random, rand, Artilery1Y, Artilery2Y
-			return rand
-		}
+		Random, randX, Artilery1X, Artilery2X
+		Random, randY, Artilery1Y, Artilery2Y
+		Click %randX% %randY%
 	}
 	if(Troop = 5){
-		if(Parameter = "X"){
-			Random, rand, Archer1X, Archer2X
-			return rand
-		} else {
-			Random, rand, Archer1Y, Archer2Y
-			return rand
-		}
+		Random, randX, Archer1X, Archer2X
+		Random, randY, Archer1Y, Archer2Y
+		Click %randX% %randY%
 	}
+}
+
+
+DeselectArmy(){
+
+	;current loaded army position
+	Deselect1X = 640 
+	Deselect1Y = 443
+	Deselect2X = 686
+	Deselect2Y = 493
+	Times = 8;
+	
+	while Times > 0 {
+		Random, randx, Deselect1X, Deselect2X
+		Random, randy, Deselect1Y, Deselect2Y
+		Click %randx% %randy%
+		Times--
+	}
+}
+
+FillArmy(Size){
+	;troop to load position
+	Troop1X = 785
+	Troop2X = 835
+	Troop1Y = 725
+	Troop2Y = 778
+	
+	
+	while(Size>0){
+		Random, randx, Troop1X, Troop2X
+		Random, randy, Troop1Y, Troop2Y
+		Click %randx% %randy%
+		Size--
+	}
+}
+
+ChangeArmy(TroopNr1, Size1, TroopNr2, Size2){
+	
+	DeselectArmy()
+	SelectTroopTab(TroopNr1)
+	;ClickRandomNTimes(Size1,Troop1X,Troop1Y,Troop2X,Troop2Y)
+	FillArmy(Size1)
+	SelectTroopTab(TroopNr2)
+	FillArmy(Size2)
+	
 }
 
 test(){
 	InputBox, troopNumber
 	InputBox, parameter 
-	result := GetTroopParameter(troopNumber,parameter)
-	MsgBox, You entered troop number %troopNumber% with parameter %parameter%. The function result is %result%
+	MsgBox, You entered troop number %troopNumber% with parameter %parameter%.
 
 }
 
-^~:: test()
+^~:: ChangeArmy(2,2,3,6)
 
 
