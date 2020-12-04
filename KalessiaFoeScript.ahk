@@ -14,10 +14,10 @@ SelectTroopTab(Troop){
 	Fast2Y:=622
 
 	;tanks units tab position 
-	Tank1X = 795
-	Tank2X = 820
-	Tank1Y = 608
-	Tank2Y = 625
+	Tank1X = 800
+	Tank2X = 815
+	Tank1Y = 609
+	Tank2Y = 622
 
 	;light units tab position
 	Light1X=845
@@ -65,7 +65,7 @@ SelectTroopTab(Troop){
 
 
 DeselectArmy(){
-
+	SetDefaultMouseSpeed, 1
 	;current loaded army position
 	Deselect1X = 640 
 	Deselect1Y = 443
@@ -82,6 +82,7 @@ DeselectArmy(){
 }
 
 FillArmy(Size){
+	SetDefaultMouseSpeed, 1
 	;troop to load position
 	Troop1X = 785
 	Troop2X = 835
@@ -101,11 +102,42 @@ ChangeArmy(TroopNr1, Size1, TroopNr2, Size2){
 	
 	DeselectArmy()
 	SelectTroopTab(TroopNr1)
-	;ClickRandomNTimes(Size1,Troop1X,Troop1Y,Troop2X,Troop2Y)
 	FillArmy(Size1)
 	SelectTroopTab(TroopNr2)
 	FillArmy(Size2)
 	
+}
+
+battle(){
+	SetDefaultMouseSpeed, 1
+	1X = 840
+	2X = 976
+	1Y = 825
+	2Y = 834
+
+	Random, randx, 1X, 2X
+	Random, randy, 1Y, 2Y 
+	Click %randx% %randy%
+	Sleep, 400
+	
+	1X = 911
+	2X = 1014
+	1Y = 828
+	2Y = 827
+
+	Random, randx, 1X, 2X
+	Random, randy, 1Y, 2Y 
+	Click %randx% %randy%
+	Sleep, 400
+	
+	1X = 935
+	2X = 998
+	1Y = 834
+	2Y = 839
+
+	Random, randx, 1X, 2X
+	Random, randy, 1Y, 2Y 
+	Click %randx% %randy%
 }
 
 test(){
@@ -115,6 +147,16 @@ test(){
 
 }
 
-^~:: ChangeArmy(2,2,3,6)
 
+F1:: 
+ChangeArmy(2,2,3,6)
+battle()
+return
 
+F2:: Click, 900, 683
+
+^Space::
+CoordMode, Mouse, Screen
+MouseGetPos, xpos, ypos 
+MsgBox, The cursor is at X%xpos% Y%ypos%.
+return
